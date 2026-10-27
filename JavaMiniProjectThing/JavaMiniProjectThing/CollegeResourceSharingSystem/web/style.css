@@ -1,0 +1,314 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6fb;
+    color: #20243a;
+}
+
+header {
+    background: #252b50;
+    color: white;
+    padding: 22px 7% 0;
+}
+
+.brand {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+header > p {
+    margin: 6px 0 0;
+    padding-bottom: 18px;
+    color: #d9def8;
+}
+
+.navbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    border-bottom: 0;
+}
+
+.nav-button {
+    margin: 0;
+    padding: 13px 18px;
+    border-radius: 7px 7px 0 0;
+    background: transparent;
+    color: #e4e8ff;
+}
+
+.nav-button:hover,
+.nav-button.active {
+    background: #f4f6fb;
+    color: #252b50;
+}
+
+main {
+    width: 86%;
+    max-width: 1250px;
+    min-height: 65vh;
+    margin: 30px auto;
+}
+
+.page {
+    width: 100%;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.welcome {
+    padding: 30px;
+    margin-bottom: 24px;
+    border-radius: 12px;
+    background: #e4e9ff;
+}
+
+.welcome h1,
+.page-intro h1 {
+    margin-top: 0;
+    color: #252b50;
+}
+
+.welcome p,
+.page-intro p {
+    line-height: 1.6;
+}
+
+.page-intro {
+    margin: 0 0 22px;
+}
+
+.home-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.panel {
+    background: white;
+    padding: 24px;
+    margin-bottom: 24px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(30, 40, 80, 0.06);
+}
+
+.home-card {
+    margin-bottom: 0;
+}
+
+.home-card p {
+    min-height: 48px;
+    line-height: 1.5;
+    color: #686d80;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+label {
+    display: block;
+    margin: 15px 0 6px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #cbd0df;
+    border-radius: 6px;
+    font: inherit;
+    background: white;
+}
+
+textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+button {
+    padding: 10px 16px;
+    margin-top: 14px;
+    border: none;
+    border-radius: 6px;
+    background: #3949ab;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #283593;
+}
+
+button.secondary {
+    background: #e8eaf3;
+    color: #252b50;
+}
+
+button.secondary:hover {
+    background: #d8dced;
+}
+
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.extra-fields {
+    padding: 14px;
+    margin-top: 16px;
+    border-radius: 8px;
+    background: #f4f6fb;
+}
+
+.message {
+    color: #686d80;
+    min-height: 20px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.section-heading p {
+    color: #686d80;
+}
+
+.search-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.search-row input {
+    flex: 1;
+    min-width: 160px;
+}
+
+.search-row button {
+    margin-top: 0;
+    white-space: nowrap;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+}
+
+th,
+td {
+    padding: 12px;
+    border-bottom: 1px solid #e8eaf1;
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    background: #f0f2fa;
+    color: #252b50;
+}
+
+td button {
+    margin: 3px;
+    padding: 7px 10px;
+}
+
+.status {
+    font-weight: bold;
+    color: #18794e;
+}
+
+.unavailable {
+    font-weight: bold;
+    color: #b42318;
+}
+
+.steps {
+    display: flex;
+    gap: 20px;
+}
+
+.steps div {
+    flex: 1;
+    padding: 18px;
+    border-radius: 8px;
+    background: #f4f6fb;
+}
+
+.steps h3 {
+    color: #3949ab;
+}
+
+.steps p {
+    line-height: 1.5;
+    color: #686d80;
+}
+
+footer {
+    padding: 20px;
+    text-align: center;
+    color: #686d80;
+}
+
+@media (max-width: 900px) {
+    .home-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .home-card p {
+        min-height: 0;
+    }
+}
+
+@media (max-width: 750px) {
+    main {
+        width: 92%;
+    }
+
+    header {
+        padding-left: 4%;
+        padding-right: 4%;
+    }
+
+    .navbar {
+        gap: 4px;
+    }
+
+    .nav-button {
+        flex: 1 1 45%;
+        border-radius: 6px;
+    }
+
+    .steps {
+        flex-direction: column;
+    }
+
+    .section-heading,
+    .search-row {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .search-row button {
+        width: 100%;
+    }
+}

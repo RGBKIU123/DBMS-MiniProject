@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusShare | Resource Sharing</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="brand">CampusShare</div>
+        <p>College Resource Sharing System</p>
+        <nav class="navbar" aria-label="Main navigation">
+            <button type="button" class="nav-button active" data-page="homePage" onclick="showPage('homePage', this)">Home</button>
+            <button type="button" class="nav-button" data-page="studentsPage" onclick="showPage('studentsPage', this)">Students</button>
+            <button type="button" class="nav-button" data-page="addResourcePage" onclick="showPage('addResourcePage', this)">Add Resource</button>
+            <button type="button" class="nav-button" data-page="cataloguePage" onclick="showPage('cataloguePage', this)">Resource Catalogue</button>
+            <button type="button" class="nav-button" data-page="borrowingPage" onclick="showPage('borrowingPage', this)">Borrowing</button>
+        </nav>
+
+        <div class="current-student-section">
+    <label for="currentStudent">Current Student:</label>
+    <select id="currentStudent">
+        <option value="">Select a student</option>
+    </select>
+</div>
+    </header>
+
+    <main>
+        <section id="homePage" class="page">
+            <section class="welcome">
+                <h1>Share resources. Help each other.</h1>
+                <p>Find and share textbooks, notes, calculators and lab equipment.</p>
+                <p>CampusShare helps students register, manage and share useful college resources.</p>
+            </section>
+
+            <section class="home-grid">
+                <article class="panel home-card">
+                    <h2>Student Management</h2>
+                    <p>Register students and manage their details.</p>
+                    <button type="button" onclick="showPage('studentsPage')">Open Students</button>
+                </article>
+                <article class="panel home-card">
+                    <h2>Add a Resource</h2>
+                    <p>Add textbooks, notes, calculators or laboratory equipment.</p>
+                    <button type="button" onclick="showPage('addResourcePage')">Add Resource</button>
+                </article>
+                <article class="panel home-card">
+                    <h2>Resource Catalogue</h2>
+                    <p>View, search, update and delete resources stored in the database.</p>
+                    <button type="button" onclick="showPage('cataloguePage')">View Catalogue</button>
+                </article>
+            </section>
+
+            <section class="panel">
+                <h2>How CampusShare Works</h2>
+                <div class="steps">
+                    <div><h3>01. Browse</h3><p>Find a resource shared by a student.</p></div>
+                    <div><h3>02. Request</h3><p>Request to borrow the resource.</p></div>
+                    <div><h3>03. Return</h3><p>Track borrowing and return the resource.</p></div>
+                </div>
+            </section>
+        </section>
+
+        <section id="studentsPage" class="page hidden">
+            <section class="page-intro">
+                <h1>Student Management</h1>
+                <p>Register students and manage their details.</p>
+            </section>
+
+            <section class="panel">
+                <h2>Register Student</h2>
+                <form id="studentForm">
+                    <label for="studentName">Full name</label>
+                    <input id="studentName" name="name" required>
+
+                    <label for="studentEmail">Email</label>
+                    <input id="studentEmail" name="email" type="email" required>
+
+                    <label for="studentPhone">Phone</label>
+                    <input id="studentPhone" name="phone" type="tel" required>
+
+                    <label for="studentDepartment">Department</label>
+                    <input id="studentDepartment" name="department" required>
+
+                    <label for="studentYear">Year of study</label>
+                    <select id="studentYear" name="year" required>
+                        <option value="">Select year</option>
+                        <option value="1">First Year</option>
+                        <option value="2">Second Year</option>
+                        <option value="3">Third Year</option>
+                        <option value="4">Fourth Year</option>
+                        <option value="5">Fifth Year</option>
+                        <option value="6">Sixth Year</option>
+                    </select>
+
+                    <div class="form-actions">
+                        <button type="submit">Add Student</button>
+                        <button type="reset" class="secondary">Clear Form</button>
+                    </div>
+                </form>
+                <p id="studentFormMessage" class="message" aria-live="polite"></p>
+            </section>
+
+            <section class="panel">
+                <div class="section-heading">
+                    <div>
+                        <h2>Registered Students</h2>
+                        <p>Students currently stored in PostgreSQL.</p>
+                    </div>
+                    <button id="refreshStudentsButton" type="button">Refresh</button>
+                </div>
+                <div class="search-row">
+                    <input id="studentSearchInput" placeholder="Search by name or email" aria-label="Search students by name or email">
+                    <button id="studentSearchButton" type="button">Search</button>
+                    <button id="clearStudentSearchButton" type="button" class="secondary">Clear Search</button>
+                </div>
+                <p id="studentMessage" class="message" aria-live="polite">Loading students...</p>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th><th>Name</th><th>Email</th><th>Phone</th>
+                                <th>Department</th><th>Year</th><th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentTable"></tbody>
+                    </table>
+                </div>
+            </section>
+        </section>
+
+        <section id="addResourcePage" class="page hidden">
+            <section class="page-intro">
+                <h1>Add a Resource</h1>
+                <p>Enter the resource details and select its registered student owner.</p>
+            </section>
+            <section class="panel">
+                <form id="resourceForm">
+                    <label for="name">Resource name</label>
+                    <input id="name" name="name" required>
+
+                    <label for="category">Category</label>
+<select id="category" name="category" required>
+    <option value="">Select category</option>
+    <option value="Textbook">Textbook</option>
+    <option value="Notes">Notes</option>
+    <option value="Lab Equipment">Lab Equipment</option>
+    <option value="Scientific Calculator">Scientific Calculator</option>
+    <option value="Other">Other</option>
+</select>
+
+<div id="customCategoryField" class="hidden">
+    <label for="customCategory">Enter Resource Category</label>
+    <input
+        type="text"
+        id="customCategory"
+        name="customCategory"
+        placeholder="e.g. Arduino Kit, Stationery, Lab Coat"
+    >
+</div>
+
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" required></textarea>
+
+                    <label for="condition">Condition</label>
+                    <select id="condition" name="condition" required>
+                        <option value="">Select condition</option>
+                        <option value="New">New</option>
+                        <option value="Good">Good</option>
+                        <option value="Fair">Fair</option>
+                    </select>
+
+                    <label for="ownerId">Resource owner</label>
+                    <select id="ownerId" name="ownerId" required>
+                        <option value="">Loading students...</option>
+                    </select>
+
+                    <div id="bookFields" class="extra-fields hidden">
+                        <h3>Book / Notes Details</h3>
+                        <label for="author">Author</label>
+                        <input id="author" name="author">
+                        <label for="subject">Subject</label>
+                        <input id="subject" name="subject">
+                    </div>
+
+                    <div id="editionField" class="extra-fields hidden">
+                        <label for="edition">Edition</label>
+                        <input id="edition" name="edition" type="number" min="1">
+                    </div>
+
+                    <div id="notesField" class="extra-fields hidden">
+                        <label for="noteType">Type of notes</label>
+                        <input id="noteType" name="noteType" placeholder="e.g. Handwritten">
+                    </div>
+
+                    <div id="equipmentFields" class="extra-fields hidden">
+                        <h3>Lab Equipment Details</h3>
+                        <label for="equipmentType">Equipment type</label>
+                        <input id="equipmentType" name="equipmentType">
+                        <label for="laboratory">Laboratory</label>
+                        <input id="laboratory" name="laboratory">
+                    </div>
+
+                    <div id="calculatorFields" class="extra-fields hidden">
+                        <h3>Calculator Details</h3>
+                        <label for="brand">Brand</label>
+                        <input id="brand" name="brand">
+                        <label for="model">Model</label>
+                        <input id="model" name="model">
+                        <label for="hasCover">Has cover?</label>
+                        <select id="hasCover" name="hasCover">
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit">Add Resource</button>
+                        <button type="reset" class="secondary">Clear Form</button>
+                    </div>
+                </form>
+                <p id="formMessage" class="message" aria-live="polite"></p>
+            </section>
+        </section>
+
+        <section id="cataloguePage" class="page hidden">
+            <section class="page-intro">
+                <h1>Resource Catalogue</h1>
+                <p>Search and manage resources currently stored in the database.</p>
+            </section>
+            <section class="panel">
+                <div class="section-heading">
+                    <div>
+                        <h2>All Resources</h2>
+                        <p>Use the actions to update or remove a resource.</p>
+                    </div>
+                    <button id="refreshButton" type="button">Refresh</button>
+                </div>
+                <div class="search-row">
+                    <input id="searchInput" placeholder="Search by name, category or details" aria-label="Search resources">
+                    <button id="searchButton" type="button">Search</button>
+                    <button id="clearSearchButton" type="button" class="secondary">Clear Search</button>
+                </div>
+                <p id="message" class="message" aria-live="polite">Loading resources...</p>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th><th>Resource</th><th>Category</th><th>Description</th>
+                                <th>Condition</th><th>Owner</th><th>Status</th><th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resourceTable"></tbody>
+                    </table>
+                </div>
+            </section>
+        </section>
+
+        <section class="report-section">
+    <h2>Resources by Category</h2>
+    <p>View how many resources are listed in each category.</p>
+
+    <button type="button" id="loadCategoryReport">
+        Load Report
+    </button>
+
+    <p id="categoryReportMessage"></p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Total Resources</th>
+            </tr>
+        </thead>
+        <tbody id="categoryReportTable">
+        </tbody>
+    </table>
+</section>
+        
+<section id="borrowingPage" class="page hidden">
+    <section class="page-intro">
+        <h1>Borrowing Management</h1>
+        <p>Request resources, manage requests and record returns.</p>
+    </section>
+
+    <section class="panel">
+        <h2>Create Borrowing Request</h2>
+
+        <form id="borrowRequestForm">
+            <label for="borrowStudent">Requesting student</label>
+<select id="borrowStudent" disabled>
+    <option value="">Select a Current Student above</option>
+</select>
+<p class="hint">
+    The requesting student is determined by the Current Student selector.
+</p>
+            <label for="borrowResource">Resource to borrow</label>
+            <select id="borrowResource" required>
+                <option value="">Loading resources...</option>
+            </select>
+
+            <div class="form-actions">
+                <button type="submit">Submit Request</button>
+                <button type="reset" class="secondary">Clear</button>
+            </div>
+        </form>
+
+        <p id="borrowFormMessage" class="message" aria-live="polite"></p>
+    </section>
+
+    <section class="panel">
+        <div class="section-heading">
+            <div>
+                <h2>Borrowing Requests</h2>
+                <p>Approve or reject pending requests as the resource owner.</p>
+            </div>
+            <button id="refreshBorrowingButton" type="button">Refresh</button>
+        </div>
+
+        <p id="borrowRequestsMessage" class="message" aria-live="polite"></p>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>Requester</th>
+                        <th>Resource</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Owner Action</th>
+                    </tr>
+                </thead>
+                <tbody id="borrowRequestsTable"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2>Borrowing Transactions</h2>
+        <p>View borrowing history and record returned resources.</p>
+
+        <p id="transactionsMessage" class="message" aria-live="polite"></p>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Borrower</th>
+                        <th>Resource</th>
+                        <th>Borrow Date</th>
+                        <th>Due Date</th>
+                        <th>Return Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="transactionsTable"></tbody>
+            </table>
+        </div>
+    </section>
+</section>
+
+    </main>
+
+    <footer><p>College Resource Sharing System | Student Project</p></footer>
+    <script src="script.js"></script>
+</body>
+</html>

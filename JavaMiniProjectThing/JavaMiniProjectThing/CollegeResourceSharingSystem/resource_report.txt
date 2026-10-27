@@ -1,0 +1,12 @@
+COLLEGE RESOURCE SHARING SYSTEM
+RESOURCE REPORT
+====================================
+
+Resource ID: 1
+Name: Casio FX-991EX
+Category: Scientific Calculator
+Description: Updated description for testing CRUD
+Condition: Good
+Owner: Test Student
+Available: Yes
+------------------------------------
